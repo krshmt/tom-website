@@ -2,9 +2,9 @@ import { SCENE } from '../../config/sceneConfig'
 
 const DEG = Math.PI / 180
 
-/** Pseudo-aléatoire déterministe : même index → toujours la même valeur (-1 → 1). */
-function noise(index, salt) {
-  const value = Math.sin((index + 1) * 127.1 + salt * 311.7) * 43758.5453
+/** Pseudo-aléatoire déterministe : même slot → toujours la même valeur (-1 → 1). */
+function noise(slot, salt) {
+  const value = Math.sin((slot + 1) * 127.1 + salt * 311.7) * 43758.5453
   return (value - Math.floor(value)) * 2 - 1
 }
 
@@ -28,55 +28,68 @@ export function getViewportFit(width, config = SCENE) {
 }
 
 /**
- * Convertit la position de scroll (px) en progression continue de la caméra,
- * exprimée en nombre de projets parcourus.
+ * Projet occupant un slot donné. C'est ici que se joue la boucle infinie :
+ * les slots avancent sans fin, les projets se répètent en boucle.
+ * Fonctionne aussi pour les slots négatifs (scroll vers le haut).
  */
-export function getProgressFromScroll(scrollY, config = SCENE) {
-  return scrollY / config.scrollPerProject - config.leadIn
+export function getProjectIndex(slot, count) {
+  return ((slot % count) + count) % count
 }
 
 /**
- * Hauteur de scroll nécessaire (px, hors hauteur de fenêtre) pour traverser
- * toute la spirale, du premier au dernier projet.
+ * Premier et dernier slot potentiellement visibles pour une progression donnée.
+ * La fenêtre se décale avec le scroll : la scène n'a donc jamais de fin.
  */
-export function getScrollLength(count, config = SCENE) {
-  const span = Math.max(count - 1, 0) + config.leadIn + config.leadOut
-  return span * config.scrollPerProject
+export function getSlotRange(progress, config = SCENE) {
+  const base = progress - config.cameraSetback
+  return {
+    first: Math.ceil(base + config.fade.outEnd),
+    last: Math.floor(base + config.fade.inStart),
+  }
+}
+
+/** Liste des slots visibles pour une progression donnée. */
+export function getVisibleSlots(progress, config = SCENE) {
+  const { first, last } = getSlotRange(progress, config)
+  const slots = []
+  for (let slot = first; slot <= last; slot += 1) slots.push(slot)
+  return slots
 }
 
 /**
- * Position, rotation, échelle et opacité d'un projet pour une progression donnée.
+ * Position, échelle et opacité d'un slot pour une progression donnée.
  * Fonction pure : c'est le cœur de la spirale.
  *
- * @param {number} index    index du projet dans la liste
+ * @param {number} slot     emplacement sur la spirale (peut être négatif)
  * @param {number} progress progression de la caméra (en nombre de projets)
  * @param {number} fit      facteur de réduction responsive
  * @param {object} config   réglages de la scène
  */
-export function computePlane(index, progress, fit = 1, config = SCENE) {
+export function computePlane(slot, progress, fit = 1, config = SCENE) {
   const { rotation, variation, fade } = config
 
-  // Profondeur : distance du projet à la caméra, en nombre de projets.
-  const depth = index - progress
+  // Profondeur : distance du slot à la caméra, en nombre de projets.
+  // `cameraSetback` recule le point de vue pour toute la scène d'un coup.
+  const depth = slot - progress + config.cameraSetback
 
   // Position angulaire sur l'hélice.
   const angle =
-    (config.startAngle + index * config.angleStep + progress * config.angleScroll) * DEG
+    (config.startAngle + slot * config.angleStep + progress * config.angleScroll) * DEG
   const sin = Math.sin(angle)
   const cos = Math.cos(angle)
 
   // Cercle (x, y) + descente progressive liée à la profondeur → hélice.
-  const radiusFactor = 1 + noise(index, 1) * variation.radius
+  const radiusFactor = 1 + noise(slot, 1) * variation.radius
   const x = cos * config.radiusX * radiusFactor * fit
   const y = (sin * config.radiusY * radiusFactor - depth * config.descent) * fit
   const z = -depth * config.spacing
 
-  // Chaque plan est orienté différemment selon sa place sur la spirale.
-  const rotateX = rotation.x + sin * rotation.swing + noise(index, 3) * 8 * variation.rotation
-  const rotateY = rotation.y + cos * rotation.swing + noise(index, 4) * 8 * variation.rotation
-  const rotateZ = rotation.z + sin * rotation.roll + noise(index, 5) * 6 * variation.rotation
+  // Orientation des plans (à 0 par défaut : images droites).
+  const rotateX = rotation.x + sin * rotation.swing + noise(slot, 3) * 8 * variation.rotation
+  const rotateY = rotation.y + cos * rotation.swing + noise(slot, 4) * 8 * variation.rotation
+  const rotateZ = rotation.z + sin * rotation.roll + noise(slot, 5) * 6 * variation.rotation
 
-  const scale = config.scale * fit * (1 + noise(index, 2) * variation.scale)
+  const scale = config.scale * fit * (1 + noise(slot, 2) * variation.scale)
 
   // Fondu au loin et fondu au passage de la caméra.
   const opacity =

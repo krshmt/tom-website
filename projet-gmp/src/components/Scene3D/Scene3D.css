@@ -1,4 +1,4 @@
-/* La scène reste fixe : c'est la spirale qui bouge, pas la page. */
+/* La scène occupe tout l'écran : c'est la spirale qui bouge, pas la page. */
 .scene {
   position: fixed;
   inset: 0;
@@ -6,25 +6,31 @@
   z-index: 0;
 }
 
-/* Le contexte 3D est isolé de l'overflow pour éviter tout aplatissement. */
+/* Les images sont dessinées ici, déformation comprise. */
+.scene__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/*
+ * Couche de clic : invisible, mais placée exactement comme les images grâce
+ * à la même perspective et aux mêmes transforms. Elle conserve de vrais
+ * liens (clic droit, clic milieu, tabulation) que WebGL seul ne donnerait pas.
+ * Le conteneur ne doit rien intercepter : dans un contexte preserve-3d, sa
+ * boîte est un plan à z = 0 qui masquerait tous les plans situés derrière.
+ */
 .scene__stage {
   position: absolute;
   inset: 0;
   perspective: var(--scene-perspective);
   perspective-origin: var(--scene-origin-x) var(--scene-origin-y);
   transform-style: preserve-3d;
-  /*
-   * Indispensable : dans un contexte preserve-3d, la boîte du conteneur est
-   * elle-même un plan à z = 0. Sans cela, elle capte les clics de toutes les
-   * images situées derrière elle (z négatif), qui deviennent inatteignables.
-   */
   pointer-events: none;
 }
 
-/*
- * Dimensions et opacité initiale viennent du CSS, pas d'un `style` React :
- * la boucle d'animation est seule à écrire transform / opacity / visibility.
- */
 .plane {
   position: absolute;
   top: 50%;
@@ -34,35 +40,18 @@
   height: var(--plane-height);
   margin-top: calc(var(--plane-height) / -2);
   margin-left: calc(var(--plane-width) / -2);
+  /* Jamais visible : le rendu est celui du canvas. */
   opacity: 0;
   pointer-events: auto;
   transform-origin: 50% 50%;
-  backface-visibility: hidden;
-  will-change: transform, opacity;
-  /* Les transforms sont écrites par la scène : aucune transition ici. */
-  transition: filter 0.4s ease;
+  visibility: hidden;
 }
 
-.plane:hover {
-  filter: brightness(1.12);
-}
-
+/* Seule exception : rendre le focus clavier repérable. */
 .plane:focus-visible {
+  opacity: 1;
   outline: 1px solid var(--fg);
-  outline-offset: 12px;
-}
-
-.plane__image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* Liseré : détache aussi les visuels très sombres du fond. */
-  border: 1px solid rgba(242, 240, 237, 0.14);
-  background-color: #17171a;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
-  user-select: none;
-  -webkit-user-drag: none;
+  outline-offset: 10px;
 }
 
 /* Assombrissement des bords : renforce la lecture de la profondeur. */

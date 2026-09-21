@@ -1,10 +1,17 @@
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: url('/fonts/helvetica-neue-5/HelveticaNeueRoman.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 :root {
   --bg: #0b0b0c;
   --fg: #f2f0ed;
   --muted: rgba(242, 240, 237, 0.5);
   --line: rgba(242, 240, 237, 0.14);
 
-  font-family: 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
+  font-family: 'Helvetica Neue';
   line-height: 1.5;
   color-scheme: dark;
   -webkit-font-smoothing: antialiased;
@@ -28,6 +35,17 @@ body {
 body {
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+/*
+ * Posee par la homepage uniquement : sa scene est pilotee par un scroll
+ * virtuel et infini, le defilement natif n a donc rien a faire.
+ * Les autres pages gardent leur defilement normal.
+ */
+body.is-locked {
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
 }
 
 a {

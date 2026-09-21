@@ -15,14 +15,14 @@ const POPUP_ANIMATION = {
       { opacity: 0, transform: 'translateY(20px)' },
       { opacity: 1, transform: 'translateY(0px)' },
     ],
-    options: { duration: 320, easing: 'cubic-bezier(0.33, 0, 0.2, 1)', fill: 'forwards' },
+    options: { duration: 200, easing: 'cubic-bezier(0.33, 0, 0.2, 1)', fill: 'forwards' },
   },
   leave: {
     keyframes: [
       { opacity: 1, transform: 'translateY(0px)' },
       { opacity: 0, transform: 'translateY(-20px)' },
     ],
-    options: { duration: 280, easing: 'cubic-bezier(0.33, 0, 0.2, 1)', fill: 'forwards' },
+    options: { duration: 200, easing: 'cubic-bezier(0.33, 0, 0.2, 1)', fill: 'forwards' },
   },
 }
 

@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import ProjectPopup from '../components/ProjectPopup/ProjectPopup'
 import Scene3D from '../components/Scene3D/Scene3D'
-import { getScrollLength } from '../components/Scene3D/spiralLayout'
 import { projets } from '../data/projets'
 import './Home.css'
 
@@ -13,12 +12,13 @@ import './Home.css'
 const DELAI_MASQUAGE = 40
 
 /**
- * Page d'accueil : la scène 3D occupe tout l'écran, un bloc vide donne au
- * document la hauteur de scroll nécessaire pour traverser la spirale.
+ * Page d'accueil : la scène 3D occupe tout l'écran.
+ *
+ * La page elle-même ne défile pas — la scène est infinie, elle est pilotée
+ * par un scroll virtuel (molette / tactile / clavier) géré dans
+ * `useScrollProgress`. Le défilement natif est donc neutralisé ici.
  */
 export default function Home() {
-  const scrollLength = getScrollLength(projets.length)
-
   const [visible, setVisible] = useState(false)
   // Dernier projet survolé : conservé le temps de l'animation de sortie.
   const [projetAffiche, setProjetAffiche] = useState(null)
@@ -38,18 +38,16 @@ export default function Home() {
 
   useEffect(() => () => clearTimeout(timerRef.current), [])
 
+  // Les autres pages du portfolio gardent leur défilement normal.
+  useEffect(() => {
+    document.body.classList.add('is-locked')
+    return () => document.body.classList.remove('is-locked')
+  }, [])
+
   return (
     <main className="home">
       <Scene3D projets={projets} onHover={handleHover} />
-
       <ProjectPopup projet={projetAffiche} visible={visible} />
-
-      {/* Réserve la hauteur de scroll : c'est elle qui pilote la scène. */}
-      <div
-        className="home__scroll-space"
-        style={{ height: `calc(${scrollLength}px + 100vh)` }}
-        aria-hidden="true"
-      />
     </main>
   )
 }
