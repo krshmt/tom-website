@@ -1,0 +1,57 @@
+.popup {
+  position: fixed;
+  right: 0;
+  bottom: 40px;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
+  pointer-events: none;
+  /* État de repos : invisible. L'animation prend ensuite la main. */
+  opacity: 0;
+}
+
+.popup__card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  max-width: 100%;
+  padding: 10px 20px 10px 10px;
+  border-radius: 18px;
+  background-color: #fbfaf8;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+.popup__image {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  object-fit: cover;
+  background-color: #e7e4df;
+}
+
+.popup__name {
+  overflow: hidden;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  color: #111112;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 720px) {
+  .popup {
+    bottom: 24px;
+  }
+
+  .popup__card {
+    gap: 14px;
+    padding: 8px 20px 8px 8px;
+  }
+
+  .popup__name {
+    font-size: 16px;
+  }
+}

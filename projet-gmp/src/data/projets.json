@@ -1,0 +1,121 @@
+{
+  "projets": [
+    {
+      "id": "studio-noir",
+      "nom": "Studio Noir",
+      "image": "https://picsum.photos/seed/studio-noir-0/900/1150",
+      "images": [
+        "https://picsum.photos/seed/studio-noir-1/1400/900",
+        "https://picsum.photos/seed/studio-noir-2/1000/1250",
+        "https://picsum.photos/seed/studio-noir-3/1400/900"
+      ],
+      "description": "Recherche photographique sur la matière et l'absence de lumière. Le projet explore comment un même volume se raconte différemment selon l'intensité et l'angle de l'éclairage, à travers une série de prises de vue en studio et un protocole de mise en scène répétable.",
+      "annee": 2025,
+      "type": "academique"
+    },
+    {
+      "id": "atelier-vertigo",
+      "nom": "Refonte Atelier Vertigo",
+      "image": "https://picsum.photos/seed/vertigo-0/900/1150",
+      "images": [
+        "https://picsum.photos/seed/vertigo-1/1400/900",
+        "https://picsum.photos/seed/vertigo-2/1000/1250",
+        "https://picsum.photos/seed/vertigo-3/1400/900"
+      ],
+      "description": "Refonte complète de l'identité visuelle et du site d'un atelier de fabrication. Le travail a couvert l'audit de l'existant, la construction d'un système graphique modulaire et la mise en production des gabarits utilisés ensuite par l'équipe interne.",
+      "annee": 2025,
+      "type": "entreprise"
+    },
+    {
+      "id": "cartographie-sensible",
+      "nom": "Cartographie Sensible",
+      "image": "https://picsum.photos/seed/carto-0/900/1150",
+      "images": [
+        "https://picsum.photos/seed/carto-1/1400/900",
+        "https://picsum.photos/seed/carto-2/1000/1250",
+        "https://picsum.photos/seed/carto-3/1400/900"
+      ],
+      "description": "Projet de cartographie d'un quartier à partir de relevés sonores et de déplacements réels. Les données collectées sur plusieurs semaines ont été traduites en une série de planches imprimées où la densité du trait remplace l'échelle classique.",
+      "annee": 2024,
+      "type": "academique"
+    },
+    {
+      "id": "signaletique-helios",
+      "nom": "Signalétique Hélios",
+      "image": "https://picsum.photos/seed/helios-0/900/1150",
+      "images": [
+        "https://picsum.photos/seed/helios-1/1400/900",
+        "https://picsum.photos/seed/helios-2/1000/1250",
+        "https://picsum.photos/seed/helios-3/1400/900"
+      ],
+      "description": "Conception de la signalétique intérieure d'un bâtiment tertiaire de quatre niveaux. Le système repose sur un jeu de pictogrammes dessinés sur mesure et sur un code couleur par étage, pensé pour rester lisible en lumière artificielle.",
+      "annee": 2024,
+      "type": "entreprise"
+    },
+    {
+      "id": "typographie-memoire",
+      "nom": "Typographie Mémoire",
+      "image": "https://picsum.photos/seed/typo-0/900/1150",
+      "images": [
+        "https://picsum.photos/seed/typo-1/1400/900",
+        "https://picsum.photos/seed/typo-2/1000/1250",
+        "https://picsum.photos/seed/typo-3/1400/900"
+      ],
+      "description": "Dessin d'un caractère typographique à partir d'inscriptions relevées sur des façades anciennes. Le projet comprend la numérisation des relevés, le dessin des glyphes et l'édition d'un spécimen imprimé présentant la famille complète.",
+      "annee": 2024,
+      "type": "academique"
+    },
+    {
+      "id": "campagne-lumen",
+      "nom": "Campagne Lumen",
+      "image": "https://picsum.photos/seed/lumen-0/900/1150",
+      "images": [
+        "https://picsum.photos/seed/lumen-1/1400/900",
+        "https://picsum.photos/seed/lumen-2/1000/1250",
+        "https://picsum.photos/seed/lumen-3/1400/900"
+      ],
+      "description": "Direction artistique d'une campagne de lancement déclinée en affichage, presse et formats sociaux. L'enjeu principal était de tenir une même intention visuelle sur des formats très différents, du 4x3 au bandeau vertical.",
+      "annee": 2023,
+      "type": "entreprise"
+    },
+    {
+      "id": "objet-hybride",
+      "nom": "Objet Hybride",
+      "image": "https://picsum.photos/seed/hybride-0/900/1150",
+      "images": [
+        "https://picsum.photos/seed/hybride-1/1400/900",
+        "https://picsum.photos/seed/hybride-2/1000/1250",
+        "https://picsum.photos/seed/hybride-3/1400/900"
+      ],
+      "description": "Objet issu d'un croisement entre deux usages quotidiens incompatibles. Le projet a été mené du croquis au prototype fonctionnel, avec plusieurs itérations d'impression puis une finition manuelle sur la dernière série.",
+      "annee": 2023,
+      "type": "academique"
+    },
+    {
+      "id": "editions-marges",
+      "nom": "Éditions Marges",
+      "image": "https://picsum.photos/seed/marges-0/900/1150",
+      "images": [
+        "https://picsum.photos/seed/marges-1/1400/900",
+        "https://picsum.photos/seed/marges-2/1000/1250",
+        "https://picsum.photos/seed/marges-3/1400/900"
+      ],
+      "description": "Collection de trois ouvrages courts partageant une même grille et un même papier, mais un rythme de lecture différent. Le travail a porté sur la hiérarchie du texte, la gestion des blancs et la fabrication en petite série.",
+      "annee": 2023,
+      "type": "academique"
+    },
+    {
+      "id": "prototype-onde",
+      "nom": "Prototype Onde",
+      "image": "https://picsum.photos/seed/onde-0/900/1150",
+      "images": [
+        "https://picsum.photos/seed/onde-1/1400/900",
+        "https://picsum.photos/seed/onde-2/1000/1250",
+        "https://picsum.photos/seed/onde-3/1400/900"
+      ],
+      "description": "Installation réactive présentée lors d'un salon professionnel. Un capteur de proximité modifie en direct la géométrie projetée, ce qui a demandé de calibrer la réponse du système pour qu'elle reste lisible dans un espace très fréquenté.",
+      "annee": 2022,
+      "type": "entreprise"
+    }
+  ]
+}
