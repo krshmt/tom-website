@@ -1,0 +1,19 @@
+# Le dépôt contient le site dans un sous-dossier. Sans `base`, Netlify lance
+# `npm run build` à la racine du dépôt, où il n'existe aucun package.json :
+# npm échoue alors avec le code 254.
+[build]
+  base = "projet-gmp"
+  command = "npm run build"
+  # Relatif à `base` : résout vers projet-gmp/dist
+  publish = "dist"
+
+[build.environment]
+  # Vite 8 exige Node ^20.19.0 || >=22.12.0
+  NODE_VERSION = "22"
+
+# Application monopage : les routes /projet/:id sont résolues côté client.
+# Sans cette règle, un accès direct ou un rafraîchissement renvoie une 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
