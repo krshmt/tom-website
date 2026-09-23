@@ -38,11 +38,11 @@ body {
 }
 
 /*
- * Posee par la homepage uniquement : sa scene est pilotee par un scroll
- * virtuel et infini, le defilement natif n a donc rien a faire.
+ * Posee par la homepage uniquement : sa scene consomme directement les
+ * deltas de Lenis et le document n a rien a faire defiler.
  * Les autres pages gardent leur defilement normal.
  */
-body.is-locked {
+body.is-scene {
   overflow: hidden;
   overscroll-behavior: none;
   touch-action: none;

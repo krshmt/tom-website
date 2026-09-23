@@ -14,9 +14,10 @@ const DELAI_MASQUAGE = 40
 /**
  * Page d'accueil : la scène 3D occupe tout l'écran.
  *
- * La page elle-même ne défile pas — la scène est infinie, elle est pilotée
- * par un scroll virtuel (molette / tactile / clavier) géré dans
- * `useScrollProgress`. Le défilement natif est donc neutralisé ici.
+ * La page elle-même ne défile pas : la scène est infinie, elle consomme
+ * directement les deltas normalisés par Lenis (voir src/scroll/lenis.js).
+ * Le défilement natif est donc neutralisé ici, et rétabli sur les autres
+ * pages du portfolio.
  */
 export default function Home() {
   const [visible, setVisible] = useState(false)
@@ -40,8 +41,8 @@ export default function Home() {
 
   // Les autres pages du portfolio gardent leur défilement normal.
   useEffect(() => {
-    document.body.classList.add('is-locked')
-    return () => document.body.classList.remove('is-locked')
+    document.body.classList.add('is-scene')
+    return () => document.body.classList.remove('is-scene')
   }, [])
 
   return (

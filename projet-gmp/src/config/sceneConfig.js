@@ -46,20 +46,36 @@ export const SCENE = {
 
   // --------------------------------------------------------------- SCROLL
   /**
-   * Le scroll est virtuel (molette / tactile / clavier) : la page n'a aucune
-   * hauteur, la progression n'est jamais bornée. C'est ce qui permet une
-   * scène réellement infinie dans les deux sens.
+   * Le défilement passe par Lenis (voir src/scroll/lenis.js).
+   * Sur la homepage, la scène capte les deltas normalisés par Lenis au lieu
+   * de faire défiler le document : la progression n est jamais bornée, ce
+   * qui rend la spirale infinie dans les deux sens.
    */
   /** Pixels de scroll nécessaires pour avancer d'un projet = vitesse. */
   scrollPerProject: 560,
-  /** Multiplicateur appliqué à la molette et au tactile. */
+  /** Multiplicateur Lenis appliqué à la molette et au tactile. */
   scrollSpeed: 1,
-  /** Lissage du déplacement : 0.02 = très flottant, 1 = collé au scroll. */
+  /** Lissage Lenis, son "lerp" : 0.02 = très flottant, 1 = collé au scroll. */
   smoothing: 0.085,
   /** Déplacement (px) d'un appui sur les flèches / Page haut-bas. */
   keyboardStep: 320,
   /** Rotation supplémentaire de toute la spirale par projet scrollé (deg). */
   angleScroll: 0,
+
+  // ------------------------------------------------ DÉFILEMENT AUTOMATIQUE
+  /**
+   * La scène avance toute seule, même sans action du visiteur : les projets
+   * se rapprochent lentement, comme un scroll continu vers le bas.
+   */
+  autoScroll: {
+    /** Vitesse, en pixels de scroll par seconde. 0 désactive la dérive. */
+    speed: 200,
+    /**
+     * Le sens de la dérive suit le dernier sens de défilement : vers le haut,
+     * les projets s'éloignent au lieu de se rapprocher.
+     */
+    followDirection: true,
+  },
 
   // --------------------------------------------------------------- IMAGES
   /** Largeur de base d'une image (px). */
@@ -115,9 +131,9 @@ export const SCENE = {
    */
   deformation: {
     /** Amplitude maximale du bombé, en px de profondeur. */
-    strength: 200,
+    strength: 250,
     /** Sensibilité au scroll : vitesse × ce facteur, borné à ±1. */
-    scrollSensitivity: 6,
+    scrollSensitivity: 7,
     /** Vitesse de retour vers la position neutre : 0.02 = lent, 1 = immédiat. */
     returnSpeed: 0.16,
     /** Finesse de la grille. Plus haut = surface plus lisse, plus coûteux. */

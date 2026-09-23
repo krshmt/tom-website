@@ -1,5 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+
+import { resetScroll } from '../scroll/lenis'
 import { TransitionContext } from './transitionContext'
 import { pageTransition } from './transitionConfig'
 
@@ -72,8 +74,9 @@ export default function PageTransition({ children }) {
     const element = containerRef.current
     if (!element) return
 
-    // La nouvelle page démarre en haut.
-    window.scrollTo(0, 0)
+    // La nouvelle page demarre en haut. On passe par Lenis pour que sa
+    // position interne reste synchronisee avec celle du document.
+    resetScroll()
 
     const animation = play(pageTransition.enter)
     animation?.finished.then(
