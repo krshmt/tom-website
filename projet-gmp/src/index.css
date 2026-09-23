@@ -11,7 +11,7 @@
   --muted: rgba(242, 240, 237, 0.5);
   --line: rgba(242, 240, 237, 0.14);
 
-  font-family: 'Helvetica Neue';
+  font-family: 'Helvetica Neue' !important;
   line-height: 1.5;
   color-scheme: dark;
   -webkit-font-smoothing: antialiased;
@@ -60,4 +60,14 @@ img {
 /* Conteneur animé par le système de transition. */
 .page-transition {
   min-height: 100vh;
+}
+
+/* Texte reserve aux lecteurs d ecran. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }

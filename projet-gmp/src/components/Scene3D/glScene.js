@@ -89,13 +89,21 @@ const FRAGMENT_SRC = `
   uniform vec2  uUvOffset;
   uniform float uOpacity;
   uniform float uBrightness; // 1 = normal, < 1 = assombri (survol)
+  uniform float uCrop;       // fraction de l image echantillonnee : 1 = entiere
   uniform float uBorder;     // epaisseur du lisere, en fraction du plan
 
   varying vec2 vUv;
   varying vec2 vLocal;
 
   void main() {
-    vec2 uv = vUv * uUvScale + uUvOffset;
+    /*
+     * Survol : le plan retrecit (uScale) ET la fenetre echantillonnee
+     * retrecit d autant (uCrop). Les pixels de l image gardent donc
+     * exactement la meme taille a l ecran : on en voit moins, comme un
+     * cadre a overflow hidden que l on refermerait sur l image.
+     */
+    vec2 cadre = (vUv - 0.5) * uCrop + 0.5;
+    vec2 uv = cadre * uUvScale + uUvOffset;
     vec3 color = texture2D(uTexture, uv).rgb;
 
     // Lisere clair : detache aussi les visuels tres sombres du fond noir.
@@ -126,6 +134,7 @@ const UNIFORM_NAMES = [
   'uUvOffset',
   'uOpacity',
   'uBrightness',
+  'uCrop',
   'uBorder',
 ]
 
@@ -374,6 +383,7 @@ export function createGLScene(canvas, { segments = 24, onReady } = {}) {
         gl.uniform1f(uniforms.uScale, plane.scale)
         gl.uniform1f(uniforms.uOpacity, plane.opacity)
         gl.uniform1f(uniforms.uBrightness, plane.brightness)
+        gl.uniform1f(uniforms.uCrop, plane.crop)
         gl.uniform2f(uniforms.uUvScale, scaleX, scaleY)
         gl.uniform2f(uniforms.uUvOffset, (1 - scaleX) / 2, (1 - scaleY) / 2)
 

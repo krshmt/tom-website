@@ -1,0 +1,158 @@
+.lecteur {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  background-color: var(--bg);
+}
+
+.lecteur__video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/*
+ * Curseur personnalise : il double le pointeur natif, qui reste visible,
+ * et rejoint la souris avec un leger retard.
+ * Le parent porte la position, ecrite par la boucle d animation ; la
+ * pastille porte l echelle, pour que les deux ne se marchent pas dessus.
+ */
+.lecteur__curseur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 12;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lecteur__curseur--visible {
+  opacity: 1;
+}
+
+.lecteur__pastille {
+  display: block;
+  padding: 5px 15px;
+  border-radius: 50px;
+  background: #39f5a5;
+  color: #0b0b0c;
+  font-size: 22px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transform: scale(1);
+  transition: transform 0.35s cubic-bezier(0.33, 0, 0.2, 1);
+}
+
+/* Souris sur la barre de controle : la pastille se retire. */
+.lecteur__pastille--retiree {
+  transform: scale(0);
+}
+
+/* Barre de contrôle flottante, calquée sur la maquette. */
+.lecteur__barre {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: calc(100vw - 40px);
+  padding: 12px;
+  border-radius: 24px;
+  background: rgba(250, 250, 248, 0.92);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  transform: translateX(-50%);
+}
+
+.lecteur__bouton {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #141416;
+  color: #fbfaf8;
+  cursor: pointer;
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.lecteur__bouton:hover {
+  background: #2a2a2e;
+  transform: scale(1.06);
+}
+
+.lecteur__bouton svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+/* Pellicule : les images extraites de la vidéo, qui servent de navigation. */
+.lecteur__pellicule {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  min-width: 120px;
+  border-radius: 14px;
+  background: #d9d6d1;
+}
+
+.lecteur__vignette {
+  display: block;
+  width: 74px;
+  height: 46px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.25s ease;
+}
+
+.lecteur__vignette:hover {
+  opacity: 1;
+}
+
+.lecteur__vignette img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Tête de lecture. */
+.lecteur__tete {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #fbfaf8;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  .lecteur__barre {
+    bottom: 20px;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 18px;
+  }
+
+  .lecteur__bouton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .lecteur__vignette {
+    width: 46px;
+    height: 34px;
+  }
+}

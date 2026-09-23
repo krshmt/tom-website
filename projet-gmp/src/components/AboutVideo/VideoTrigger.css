@@ -1,0 +1,92 @@
+/*
+ * Le bloc déborde volontairement du coin : les décalages négatifs cachent
+ * environ un tiers de l'image sur chaque axe, soit la moitié de sa surface.
+ */
+.video-trigger {
+  position: fixed;
+  bottom: -74px;
+  left: -104px;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 320px;
+  height: 232px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  cursor: pointer;
+  /*
+   * La rotation est portee par le bouton, donc par l'image ET le marquee :
+   * les deux restent solidaires, au repos comme au survol.
+   */
+  transform: rotate(-10deg);
+  transition: transform 0.5s cubic-bezier(0.33, 0, 0.2, 1);
+}
+
+.video-trigger:hover,
+.video-trigger:focus-visible {
+  transform: rotate(-9deg) scale(1.05);
+}
+
+/* Cadre et marquee sont superposés au centre du bouton. */
+.video-trigger__cadre,
+.video-trigger__marquee {
+  grid-area: 1 / 1;
+}
+
+.video-trigger__cadre {
+  overflow: hidden;
+  width: 250px;
+  height: 158px;
+  border-radius: 14px;
+}
+
+.video-trigger__cadre img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-trigger__marquee {
+  width: 320px;
+  height: 232px;
+}
+
+.video-trigger__marquee text {
+  fill: currentColor;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.video-trigger:focus-visible {
+  outline: 1px solid var(--fg);
+  outline-offset: -8px;
+  border-radius: 18px;
+}
+
+@media (max-width: 720px) {
+  .video-trigger {
+    bottom: -56px;
+    left: -78px;
+    width: 240px;
+    height: 174px;
+  }
+
+  .video-trigger__marquee {
+    width: 240px;
+    height: 174px;
+  }
+
+  .video-trigger__cadre {
+    width: 188px;
+    height: 119px;
+    border-radius: 11px;
+  }
+
+  .video-trigger__marquee text {
+    font-size: 15px;
+  }
+}

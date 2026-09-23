@@ -116,6 +116,8 @@ export default function Scene3D({ projets, onHover }) {
           scale: plane.scale * (1 + (hover.scale - 1) * value),
           opacity: plane.opacity,
           brightness: 1 + (hover.darken - 1) * value,
+          // Meme facteur que l echelle : l image est rognee, pas reduite.
+          crop: 1 + (hover.scale - 1) * value,
         })
       }
 
